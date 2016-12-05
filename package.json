@@ -1,0 +1,19 @@
+{
+  "name": "easy-swiper",
+  "version": "1.0.0",
+  "description": "swiper & carousel",
+  "main": "dist/easySwiper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/winnerhp/easy-swiper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/winnerhp/easy-swiper/issues"
+  },
+  "homepage": "https://github.com/winnerhp/easy-swiper#readme"
+}

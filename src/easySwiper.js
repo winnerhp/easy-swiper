@@ -66,6 +66,7 @@
             return this
         },
         _autoPlay() {
+            this.interval ? clearInterval(this.interval) : '';
             this.interval = setInterval(() => {
                 this._doAnimate('next')
             },5e3)

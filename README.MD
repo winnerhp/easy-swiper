@@ -30,12 +30,12 @@ npm install easy-swiper
     <div class="item"></div>
 </div>
 
-<script type="text/javascript" src="./easySwiper.js"></script>
+<script type="text/javascript" src="./easySwiper.min.js"></script>
 
 //(if support) var easySwiper = require('easy-swiper'); 
  
 var container = new easySwiper({
-    element: document.queryselector('#container'),
+    element: document.querySelector('#container'),
     initNum: 0,
     onChangeBegin: function(obj){
     },

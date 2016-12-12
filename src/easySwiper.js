@@ -59,7 +59,7 @@
         _init() {
             this._bindEvents();
             this.$child = Array.prototype.slice.call(this.$el.children);
-            this.numDom = this.$child.length;
+            this.numDom = this.$child.length - 1;
             this._initPage(this.initNum,'first');
             this._resetStyle();
             if(this.autoPlay) this._autoPlay();
@@ -88,12 +88,12 @@
                 num: initNum
             }
             this.prev = {
-                dom: (initNum - 1 > -1) ? this.$child[initNum - 1] : (this.autoPlay ? this.$child[this.numDom - 1] : ''),
-                num: (initNum - 1 > -1) ? initNum - 1 : (this.autoPlay ? this.numDom - 1 : '')
+                dom: (initNum - 1 > -1) ? this.$child[initNum - 1] : (this.autoPlay ? this.$child[this.numDom] : ''),
+                num: (initNum - 1 > -1) ? initNum - 1 : (this.autoPlay ? this.numDom : '')
             }
             this.next = {
-                dom: (initNum + 1 > this.numDom - 1) ? (this.autoPlay ? this.$child[0] : '') : this.$child[initNum + 1],
-                num: (initNum + 1 > this.numDom - 1) ? (this.autoPlay ? 0 : '') : initNum + 1
+                dom: (initNum + 1 > this.numDom) ? (this.autoPlay ? this.$child[0] : '') : this.$child[initNum + 1],
+                num: (initNum + 1 > this.numDom) ? (this.autoPlay ? 0 : '') : initNum + 1
             }
         },
         _initPage(index,callback) {
@@ -110,8 +110,8 @@
                 if(typeof(callback) == 'function') {
                     callback()
                 }
-                if(this.autoPlay && (this.current.num == this.numDom - 1 || this.current.num == 1 || this.current.num == 0)) {
-                    this._resetStyle('auto');
+                if(this.autoPlay) {
+                    this._resetStyle();
                 }
                 this._emit('onChangeEnd',{
                     dom: this.current.dom,
@@ -123,15 +123,11 @@
         },
         _resetStyle(type) {
             var curNum = this.current.num;
+             if(this.autoPlay) {
+                this._translate([[this.current.dom,0,0],[this.next.dom,this.baseWidth,0],[this.prev.dom,-this.baseWidth,0]]);
+                return
+            }
             this.$child.forEach((item,index) => {
-                if(type) {
-                    if(curNum == index) {
-                        this._translate(item,0,0);
-                    } else {
-                        this._translate(item,this.baseWidth,0);
-                    }
-                    return
-                }
                 if(curNum == index) {
                     this._translate(item,0,0);
                 } else if (index > curNum) {
@@ -196,7 +192,7 @@
         }
     }
     easyswiper.prototype.gotoPage = function(newindex) {
-        if(newindex < 0 || newindex > this.numDom - 1 || newindex == this.current.num || this.autoPlay) 
+        if(newindex < 0 || newindex > this.numDom || newindex == this.current.num || this.autoPlay) 
             return
         var curIndex = this.current.num;
         UTILS.removeClass(this.current.dom,'active');
@@ -233,11 +229,11 @@
         UTILS.removeClass(this.current.dom,'active');
         if(towards == 'prev' && this.prev.dom) {
             this._translate(options ? options.domlist : [[this.prev.dom,0,300],[this.current.dom,this.baseWidth,300],[this.next.dom,this.baseWidth,0]])
-            curIndex = options ? options.index : (curIndex - 1 < 0 && this.autoPlay ? this.numDom - 1 : curIndex - 1);
+            curIndex = options ? options.index : (curIndex - 1 < 0 && this.autoPlay ? this.numDom : curIndex - 1);
             this._initPage(curIndex,options ? options.callback : '')
         } else if (towards == 'next' && this.next.dom) {
             this._translate(options ? options.domlist : [[this.next.dom,0,300],[this.current.dom,-this.baseWidth,300],[this.prev.dom,-this.baseWidth,0]]);
-            curIndex = options ? options.index : (curIndex + 1 > this.numDom - 1 && this.autoPlay ? 0 : curIndex + 1);
+            curIndex = options ? options.index : (curIndex + 1 > this.numDom && this.autoPlay ? 0 : curIndex + 1);
             this._initPage(curIndex,options ? options.callback : '')
         } else {
             this._translate([[this.current.dom,0,300],[this.prev.dom,-this.baseWidth,300],[this.next.dom,this.baseWidth,300]]);

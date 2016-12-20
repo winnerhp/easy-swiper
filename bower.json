@@ -1,0 +1,17 @@
+{
+  "name": "easy-swiper",
+  "description": "swiper & carousel",
+  "main": "dist/easySwiper.js",
+  "authors": [
+    "huangpei <huangpei@bytedance.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/winnerhp/easy-swiper",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

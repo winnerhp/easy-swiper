@@ -1,3 +1,5 @@
+'use strict';
+
 (function (global, factory) {
     if (typeof define === 'function' && define.amd) {
         define(['exports', 'module'], factory);
@@ -166,7 +168,7 @@
             event.preventDefault();
             event.stopPropagation();
             if (this.autoPlay) clearInterval(this.interval);
-            // 兼容ios滑至上边界touchend和touchcancel不能触发
+            // 兼容头条ios客户端滑至上边界touchend和touchcancel不能触发
             if (!this.autoPlay && cTouch.pageY < 0) {
                 this._touchend();
                 return;
@@ -182,6 +184,9 @@
             if (this.autoPlay) this._autoPlay();
             if (this.canscroll) {
                 this.canscroll = false;
+                return;
+            }
+            if (Date.now() - this.now < 300 || !this.delta) {
                 return;
             }
             var min = this.baseWidth / 3,

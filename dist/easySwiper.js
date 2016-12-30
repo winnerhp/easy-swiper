@@ -186,7 +186,7 @@
                 this.canscroll = false;
                 return;
             }
-            if (Date.now() - this.now < 300 || !this.delta) {
+            if (!this.delta) {
                 return;
             }
             var min = this.baseWidth / 3,

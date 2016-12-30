@@ -1,11 +1,12 @@
 {
   "name": "easy-swiper",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "swiper & carousel",
   "main": "dist/easySwiper.js",
   "scripts": {
-    "build": "babel src -d dist",
-    "compress": "uglifyjs ./dist/easySwiper.js --compress --mangle --output ./dist/easySwiper.min.js"
+    "build": "babel src --out-dir dist",
+    "compress": "uglifyjs ./dist/easySwiper.js --compress --mangle --output ./dist/easySwiper.min.js",
+    "compress_normal": "uglifyjs ./dist/easySwiper_normal.js --compress --mangle --output ./dist/easySwiper_normal.min.js"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 {
   "name": "easy-swiper",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "swiper & carousel",
   "main": "dist/easySwiper.js",
   "scripts": {

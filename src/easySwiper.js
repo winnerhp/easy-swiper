@@ -36,6 +36,23 @@
             }
         }
     }
+    // transitionend handler
+    var EVENT = {
+        timeHandle: '',
+        addOnce(el,event,handler) {
+            var listener = function () {
+                if(EVENT.timeHandle) clearTimeout(EVENT.timeHandle);
+                EVENT.timeHandle = setTimeout(function() {
+                    handler.apply(this, arguments);
+                },5e2)
+                EVENT.remove(el,event,listener)
+            }
+            el.addEventListener(event,listener,false);
+        },
+        remove(el,event,handler) {
+            el.removeEventListener(event,handler,false);
+        }
+    }
     function easyswiper(params) {
         this.$el = params.element;
         this.initNum = params.initNum || 0;
@@ -106,6 +123,7 @@
                 dom: this.current.dom,
                 num: this.current.num
             });
+
             let animationCb = () => {
                 if(typeof(callback) == 'function') {
                     callback()
@@ -117,9 +135,8 @@
                     dom: this.current.dom,
                     num: this.current.num
                 });
-                this.current.dom.removeEventListener('webkitTransitionEnd',animationCb,false)
             }
-            this.current.dom.addEventListener('webkitTransitionEnd',animationCb,false)
+            EVENT.addOnce(this.current.dom,'webkitTransitionEnd',animationCb)
         },
         _resetStyle(type) {
             var curNum = this.current.num;

@@ -10,7 +10,7 @@
         factory(mod.exports, mod);
         global.easySwiper = mod.exports;
     }
-})(this, function (exports, module) {
+})(undefined, function (exports, module) {
     // 简易工具函数
     var UTILS = {
         hasClass: function hasClass(el, cls) {
@@ -36,6 +36,23 @@
             if (!hasClass(el, cls)) {
                 el.className = el.className + ' ' + cls;
             }
+        }
+    };
+    // transitionend handler
+    var EVENT = {
+        timeHandle: '',
+        addOnce: function addOnce(el, event, handler) {
+            var listener = function listener() {
+                if (EVENT.timeHandle) clearTimeout(EVENT.timeHandle);
+                EVENT.timeHandle = setTimeout(function () {
+                    handler.apply(this, arguments);
+                }, 5e2);
+                EVENT.remove(el, event, listener);
+            };
+            el.addEventListener(event, listener, false);
+        },
+        remove: function remove(el, event, handler) {
+            el.removeEventListener(event, handler, false);
         }
     };
     function easyswiper(params) {
@@ -113,6 +130,7 @@
                 dom: this.current.dom,
                 num: this.current.num
             });
+
             var animationCb = function animationCb() {
                 if (typeof callback == 'function') {
                     callback();
@@ -124,9 +142,8 @@
                     dom: _this3.current.dom,
                     num: _this3.current.num
                 });
-                _this3.current.dom.removeEventListener('webkitTransitionEnd', animationCb, false);
             };
-            this.current.dom.addEventListener('webkitTransitionEnd', animationCb, false);
+            EVENT.addOnce(this.current.dom, 'webkitTransitionEnd', animationCb);
         },
         _resetStyle: function _resetStyle(type) {
             var _this4 = this;

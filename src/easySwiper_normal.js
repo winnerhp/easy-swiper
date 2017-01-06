@@ -9,7 +9,23 @@
         global.easySwiper = mod.exports;
     }
 })(this, function (exports, module) {
-
+    // transitionend handler
+    var EVENT = {
+        timeHandle: '',
+        addOnce(el,event,handler) {
+            var listener = function () {
+                if(EVENT.timeHandle) clearTimeout(EVENT.timeHandle);
+                EVENT.timeHandle = setTimeout(function() {
+                    handler.apply(this, arguments);
+                },5e2)
+                EVENT.remove(el,event,listener)
+            }
+            el.addEventListener(event,listener,false);
+        },
+        remove(el,event,handler) {
+            el.removeEventListener(event,handler,false);
+        }
+    }
     function easyswiper(params) {
         this.$el = params.element;
         this.$childs = Array.prototype.slice.call(this.$el.children);
@@ -69,9 +85,7 @@
             this.delta = null;
             this.canscroll = this.canswipe = false;
             this._setIndex(index);
-
             if(typeof(callback) == 'string' && callback) return
-
             this._emit('onChangeBegin',{
                 dom: this.$childs[this.curIdx],
                 num: this.curIdx
@@ -84,9 +98,8 @@
                     dom: this.$childs[this.curIdx],
                     num: this.curIdx
                 });
-                this.$el.removeEventListener('webkitTransitionEnd',animationCb,false)
             }
-            this.$el.addEventListener('webkitTransitionEnd',animationCb,false)
+            EVENT.addOnce(this.$el,'webkitTransitionEnd',animationCb)
         },
         _resetStyle(type) {
             var index = this.curIdx;

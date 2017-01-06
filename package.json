@@ -1,8 +1,12 @@
 {
   "name": "easy-swiper",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "swiper & carousel",
   "main": "dist/easySwiper.js",
+  "keywords": [
+    "swiper",
+    "carousel"
+  ],
   "scripts": {
     "build": "babel src --out-dir dist",
     "compress": "uglifyjs ./dist/easySwiper.js --compress --mangle --output ./dist/easySwiper.min.js",
@@ -22,5 +26,8 @@
     "babel-cli": "^6.18.0",
     "babel-preset-es2015": "^6.18.0",
     "uglify-js": "^2.7.5"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }

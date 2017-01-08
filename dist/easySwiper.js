@@ -130,7 +130,6 @@
                 dom: this.current.dom,
                 num: this.current.num
             });
-
             var animationCb = function animationCb() {
                 if (typeof callback == 'function') {
                     callback();
@@ -190,6 +189,10 @@
                 this._touchend();
                 return;
             }
+            this._emit('onMoving', {
+                num: this.current.num,
+                delta: this.delta
+            });
             this._translate(this.current.dom, this.delta, 0);
             this.prev.dom && this._translate(this.prev.dom, this.delta - this.baseWidth, 0);
             this.next.dom && this._translate(this.next.dom, this.delta + this.baseWidth, 0);

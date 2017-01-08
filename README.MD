@@ -43,6 +43,8 @@ var container = new easySwiper({
     },
     onInit: function(obj){
     },
+    onMoving: function(obj){
+    },
     autoPlay: true||false
 })
  
@@ -56,6 +58,7 @@ container.gotoPage(num)
 * onChangeBegin: swiper开始
 * onChangeEnd: swiper结束
 * onInit: swiper初始化完成
+* onMoving: swiper跟随手指移动时,obj包含 num 和 delta（偏移值）
 * autoPlay: 是否轮播
 * 回调函数的obj包含obj.dom和obj.num,分别代表当前dom和当前索引值
 * container.gotoPage(num) 从0开始的索引，(!注autoPlay为true的时候gotoPage不生效)

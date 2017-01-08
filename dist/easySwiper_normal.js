@@ -91,6 +91,7 @@
 
             this.delta = null;
             this.canscroll = this.canswipe = false;
+            if (index == this.curIdx) return;
             this._setIndex(index);
             if (typeof callback == 'string' && callback) return;
             this._emit('onChangeBegin', {
@@ -138,6 +139,10 @@
                 this._touchend();
                 return;
             }
+            this._emit('onMoving', {
+                num: this.curIdx,
+                delta: this.delta
+            });
             this._translate(this.$el, this.delta, 0);
         },
         _touchcancel: function _touchcancel(event) {

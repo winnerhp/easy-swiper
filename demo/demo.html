@@ -59,7 +59,10 @@ var page = new easySwiper({
     },
     onInit: function(obj){
     },
-    autoPlay: true
+    onMoving: function(obj) {
+        console.log(obj)
+    },
+    autoPlay: false
 })
 </script> 
 </body>
